@@ -1,0 +1,25 @@
+<div>
+<center><h3><?=$this->title?></h3></center>
+<table align="center" border="1px" cellpadding="1px" cellspacing="1px">
+<tr align="center">
+    <td><b>id</b></td>
+    <td><b>Postedon</b></td>
+    <td><b>Post_id</b></td>
+    <td><b>Description</b></td>
+    <td><b>Name</b></td>
+    <td><b>Action</b></td>
+</tr>
+<?php foreach ($this->comments as $key=>$val): //Zend_Debug::dump($val);die; ?>
+    <tr style="border:1px solid #333333" mce_style="border:1px solid #333333">
+    <tr>
+    <td style="width: 30px"><b><?=$val['id']?></b></td>
+    <td style="width: 70px"><b><?=$val['Postedon']?></b></td>   
+    <td style="width: 70px"><b><?=$val['[post_id']?></b></td>
+    <td><b><?=$val['Description']?></b></td>
+    <td style="width: 70px"><b><?=$val['Name']?></b></td>
+    <td style="width: 70px"><b><a href="<?php echo $this->url(array('controller'=>'cat','action'=>'edit', 'id'=>$val['id']));?>"><div id="edit">Edit</div></a>
+            <a href="<?php echo $this->url(array('controller'=>'cat','action'=>'delete', 'id'=>$val['id']));?>" onclick="return confirm('Are you sure you want to delete?')"><div id="delete">Delete</div></a> </b></td>    
+    </tr>
+<?php endforeach; ?>
+</table>
+</div>

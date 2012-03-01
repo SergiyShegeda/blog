@@ -1,0 +1,25 @@
+<?php if (count($this->paginator)): ?>
+
+<?php foreach ($this->paginator as $post ): ?>
+<div class="article">
+  <h2><span><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"><?php echo $this->escape($post['title']); ?></a></span></h2>
+  <p class="info noprint"> <span class="date"><?echo $post['date'];?></span>
+      <span class="noscreen">,</span> <span class="cat"><a href="#"><? echo $post['cat_title']?></a></span>
+      <span class="noscreen">,</span> <span class="user"><a href="#"><? echo $post['username'];?></a></span>
+      <span class="noscreen">,</span> <span class="comments"><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"> Comments(<?php echo $this->CommentsCount($post['id']); ?>)</a></span> </p>
+  <p><?php echo( $post['full_text']); ?></p>
+  <p class="btn-more box noprint"><strong><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"">Continue</a></strong></p>
+  <br>
+  <h3><span>
+      <? foreach ($this->tags as $val1): ?>
+     <?if ($post['id'] == $val1['id']) {?>      
+     <a href="#"> <? echo $val1['name'].';'; ?></a>
+         <?}?>
+     <?endforeach;?>       
+      </span></h3>  
+</div>
+<?php endforeach; ?>
+<?php endif; ?>
+<div class="pagination"><?php echo $this->paginationControl($this->paginator,
+                                  'Elastic',
+                                  '/partials/my_pagination_control.phtml'); ?></div>

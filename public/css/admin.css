@@ -1,0 +1,103 @@
+/* 
+    Document   : site
+    Created on : 06.02.2012, 10:31:41
+    Author     : ep
+    Description:
+        Purpose of the stylesheet follows.
+*/
+root { 
+    display: block;
+}
+body{
+    
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    text-align: left;
+    margin: auto;
+    padding: 0;
+    background-color: #e8e6e6;
+}
+a{
+    color: #006666;
+    text-decoration: underline;
+}
+a img{text-decoration: none;}
+.head{
+    
+    background-color: #414141;
+    color: #ffffff;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.head a{
+    color: #ffffff;
+} 
+.gotofrontlink{
+    float:right;
+    width: 250px;
+    line-height: 30px;
+}
+
+h1{
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin:0 0 10px 0;
+    background: #08C;
+    color: #FFF;
+    border-bottom: 1px solid #000;
+    padding: 10px;
+}
+.content
+{
+    border: 1px solid black;
+    float: right;
+    padding:0 20px;
+    width: 83% !important;
+}
+.content table
+{
+    align: center;
+    width: 80%;
+}
+.content td {
+    text-align: center;
+}
+
+.left
+    {
+    padding: 20px 20px 20px;
+    float: left;
+    width: 10%;
+    min-height: 500px;
+    border: 1px solid black;
+}
+.topnav	{
+    padding: 5px ;
+}
+		
+.topnav ul , .topnav ul li
+{
+    display: inline;
+}		
+.topnav ul li a
+{
+        color: #ffffff;
+        text-decoration: none;
+        border-width: 1px 1px 0px 1px;
+        border-color: #000;
+        border-style: solid;
+        padding: 5px;
+}
+.topnav ul li a:hover
+{
+        background: #CCC;
+}
+.span.cke_skin_kama {
+    border: 1px solid #D3D3D3;
+    border-radius: 5px 5px 5px 5px;
+    padding: 5px;
+    padding-left: 250px;
+}

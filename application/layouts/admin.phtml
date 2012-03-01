@@ -1,0 +1,33 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+    <?php echo $this->headStyle() ?>
+    <?php echo $this->headScript() ?> 
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/admin.css'); ?>
+    <?php
+    if ( $this->ckeditor ) {
+        echo $this->headScript()->appendFile( $this->baseUrl().'/js/ckeditor/ckeditor.js');
+    }
+    ?>
+</head>
+    <?php  $auth = Zend_Auth::getInstance();
+    if ($auth->hasIdentity()) { ?>
+        <div class="head">
+        <?="You Enter as "?><b><?=$auth->getIdentity()->username;?></b>
+        <br style="clear: both" />
+        </div>
+    <?}?>
+<body id="page-home">
+    <?php  $auth = Zend_Auth::getInstance();
+    if ($auth->hasIdentity()) { ?>
+        <div class="left">
+        <?= $this->navigation()->menu(); ?>    
+        </div>
+    <?}?>
+    <div class="content">
+    <?php echo $this->layout()->content ?>
+    </div>
+</body>
+</html>

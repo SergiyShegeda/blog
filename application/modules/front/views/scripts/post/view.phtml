@@ -1,0 +1,25 @@
+<div class="article">
+  <h2><span><?php echo $this->escape($this->post['title']); ?></a></span></h2>
+  <p class="info noprint"> <span class="date"><?echo $this->post['date'];?></span>
+      <span class="noscreen">,</span> <span class="cat"><a href="#"><? echo $this->post['cat_title']?></a></span>
+      <span class="noscreen">,</span> <span class="user"><a href="#"><? echo $this->post['username'];?></a></span>
+  <p><?php echo( $this->post['full_text']); ?></p>
+ <!-- <p class="btn-more box noprint"><strong><a href="#">Continue</a></strong></p>-->
+  <br>
+</div>
+<div slass="comments">
+<h2><span class="comments">Comments:</span></h2>    
+    <?php if (count($this->paginator)): ?>
+<?php foreach ($this->paginator as $comment ): ?>
+    <p class="comm noprint"> <span class="user"><b><?echo $comment['username'];?>:</b></span><span class="date"><b><?echo $comment['Postedon'];?>:</b></span></p>
+     <p class="info noprint">  &nbsp;&nbsp; <span class="comments"><i><?echo $comment['Description'];?></i></span></p>
+<? endforeach; ?>
+<?php else : ?>
+	<div> <p class="info noprint">  &nbsp;&nbsp; <span class="comments"><i>No comments</i></span></p></div>
+	<?php endif; ?>
+<div class="pagination"><?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    '/partials/my_pagination_control.phtml'); ?></div>
+ <h2><span class="comments">Add Comments:</span></h2>  
+ <? echo $this->form; ?>
+</div>
