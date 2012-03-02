@@ -11,25 +11,19 @@ echo $this->doctype() ?>
     <?php echo $this->partial('header.phtml','front', array(
     'title'=>$this->title,
      )); ?>
-
       <div id="content"><?php echo $this->layout()->content ?></div>
-      <!-- /content -->
-      <!-- Right column -->
       <div id="col" class="noprint">
         <div id="col-in">
-          <!-- Login Form -->
           <h3><span><a href="#">login</a></span></h3>
           <div id="login">
           <? $auth = Zend_Auth::getInstance();
              if (!$auth->hasIdentity()) {
                   echo $this->SetupLoginForm();
                   echo '<p><a href="'.$this->url(array('registration' => 'registration'), 'reg').'">Registration</a></p>'; 
-        }else{
-            echo 'You loged in as <b>' . $auth->getIdentity()->username .'</b>';
-            echo '<p><a href="'.$this->url(array('logOut' => ''), 'logout').'">Logout</a></p>'; ?>
-            
-            <? }?>
-              
+            }else{
+                echo 'You loged in as <b>' . $auth->getIdentity()->username .'</b>';
+                echo '<p><a href="'.$this->url(array('logOut' => ''), 'logout').'">Logout</a></p>'; ?>
+        <? }?>           
           </div>
           <hr class="noscreen" />
           <h3 ><span>Category</span></h3>
