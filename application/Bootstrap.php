@@ -1,34 +1,15 @@
 <?php
-class LayoutLoader extends Zend_Controller_Action_Helper_Abstract
-{
- public function preDispatch() 
-    {
-        $bootstrap = $this->getActionController()
-                          ->getInvokeArg('bootstrap');
-        $config = $bootstrap->getOptions();
-                
-        $module = $this->getRequest()->getModuleName();
-        
-        if (isset($config[$module]['resources']['layout']['layout'])) {
-            $layoutScript = $config[$module]['resources']['layout']['layout'];
-            $this->getActionController()
-                 ->getHelper('layout')
-                 ->setLayout($layoutScript);
-        }
-    }
-}
-
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-   protected function _init()
-   {
-       Zend_Controller_Action_HelperBroker::addPath(
-        APPLICATION_PATH .'/modules/admin/controllers/helpers');
-   }
+    protected function _initActionHelper()
+    {
+        Zend_Controller_Action_HelperBroker::addHelper(new Blog_Action_Helper_UrlConverter());
+    }
+   
     protected function _initLayoutHelper()
     {
-        $this->bootstrap('frontController');
-        Zend_Controller_Action_HelperBroker::addHelper(new LayoutLoader());
+    $this->bootstrap('frontController');
+    Zend_Controller_Action_HelperBroker::addHelper(new Blog_Action_Helper_LayoutLoader());
     }
     public function _initRouter()
     {
@@ -95,5 +76,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
          
          return $router;
     }
- }
+}
+
+
 

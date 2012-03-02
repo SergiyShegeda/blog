@@ -9,17 +9,17 @@ class Application_Form_Login extends Zend_Form
         
         $this->addElement('text', 'username', array(
             'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', false, array(0, 30)),
-            ),
+                'validators' => array(
+                    array('StringLength', false, array(0, 30)),
+                ),
             'required'   => true,
             'label'      => 'Username:',
         ));
         
         $this->addElement('password', 'password', array(
             'filters'    => array('StringTrim'),
-            'validators' => array(
-                array('StringLength', false, array(0, 30)),
+                'validators' => array(
+                    array('StringLength', false, array(0, 30)),
             ),
             'required'   => true,
             'label'      => 'Password:',
@@ -32,10 +32,6 @@ class Application_Form_Login extends Zend_Form
         )); 
         
         $this->addElement('hidden', 'position');
-        
-        $this->addElement('hidden', 'categorie');
-        
-        $this->addElement('hidden', 'post');
     }
 }
 

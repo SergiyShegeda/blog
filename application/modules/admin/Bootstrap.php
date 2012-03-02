@@ -1,6 +1,11 @@
 <?php
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
+    protected function _init()
+    {
+        Zend_Controller_Action_HelperBroker::addPath(
+        APPLICATION_PATH .'/modules/admin/controllers/helpers');
+    }
     protected function _initAutoload()
     {
         $autoloader = new Zend_Application_Module_Autoloader(array(

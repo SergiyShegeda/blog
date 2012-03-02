@@ -46,19 +46,19 @@ class Admin_AuthController extends Zend_Controller_Action
     {
         $form = new Application_Form_Login();  
         $request = $this->getRequest();
-        //Zend_Debug::dump($request->getUserParams());die;
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {                               
                 if ($this->_process($form->getValues())) {
                     if ($form->position->getValue() == 'front'){
-                        $this->_helper->redirector->setGotoRoute(array('catUrl'=>'novosti', 'postUrl'=>'new'),'postView');
-                        
+                        $this->_helper->redirector('index', 'index','front');
+                       
                      }
                     $this->_helper->redirector->setGotoRoute(array('controller'=>'index', 'action'=>'index'),'admin');
                 }
+               
              }
-        $this->view->form = $form;
         }
+        $this->view->form = $form;
     }
     
     /**

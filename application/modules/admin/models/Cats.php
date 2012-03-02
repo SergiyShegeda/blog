@@ -36,10 +36,9 @@ class Admin_Model_Cats extends Zend_Db_Table
 
     public function updateCat($id, $url, $title, $parent)
     {
-        $preUrl = new Admin_Model_Posts();
         $data = array(
                 'id' => $id,
-                'cat_url'=> $preUrl->getUrl($url),
+                'cat_url'=> $url,
                 'cat_title' => $title,
                 'parent_id'=>$parent,
                 );
@@ -53,9 +52,8 @@ class Admin_Model_Cats extends Zend_Db_Table
 
     public function addCat($url, $title, $parent)
     {
-        $preUrl = new Admin_Model_Posts();
         $data = array(
-                'cat_url'=> $preUrl->getUrl($url),
+                'cat_url'=> $url,
                 'cat_title' => $title,
                 'parent_id'=>$parent,
                 );

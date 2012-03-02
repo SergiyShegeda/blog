@@ -27,8 +27,7 @@ class Admin_Model_Comments extends Zend_Db_Table
         $data = array('post_id' => $postId,
                     'Description' => $description,
                     'Name' => $name,
-                    'Postedon' => $postedOn
-                     );				
+                    'Postedon' => $postedOn);				
         $this->insert($data);
     }
 }

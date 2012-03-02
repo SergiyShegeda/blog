@@ -1,5 +1,4 @@
 <?php
-
 class Admin_PostsController extends Zend_Controller_Action
 {
      /**
@@ -9,19 +8,20 @@ class Admin_PostsController extends Zend_Controller_Action
     {
         $auth = Zend_Auth::getInstance();
         if (!$auth->hasIdentity()) {
-            $this->_helper->redirector('index','auth','admin');
+            $this->_helper->redirector->setGotoRoute(array('controller'=>'auth', 'action'=>'index'),'admin');
         }
     }
 
     public function indexAction()
-    {
-        // action body
+    {   
+       // $converter = new Admin_Controller_Helpers_UrlConverter();
+        //Zend_Debug::dump( $converter);die;
         $posts = new Admin_Model_Posts();
         $this->view->posts = $posts->findAll(); 
         $this->view->title = _("Posts");
         $tagsList = new Admin_Model_Tags();
         $this->view->tags = $tagsList->findTags();
-       
+  
     }
     public function addAction()
     {
@@ -33,14 +33,18 @@ class Admin_PostsController extends Zend_Controller_Action
             if ($form->isValid($formData)) {
                 $title = $form->getValue('title'); 
                 $full_text = $form->getValue('full_text');
-                $url = $form->getValue('url');
+                if($url){
+                    $url = $form->getValue('url');
+                }else{
+                    $url = $this->_helper->UrlConverter($form->getValue('title'));
+                }
                 $is_active = $form->getValue('is_active');
                 $tags = $form->getValue('tags');
                 $tags = explode(',', $tags);
                 $category = $form->getValue('parent_id'); 
                 $auth = Zend_Auth::getInstance();  
                 $post = new Admin_Model_Posts();
-                $post->addPost($title, $full_text, $url, $is_active, $category, $auth->getIdentity()->id, date("y.m.d H:i:s"));  
+                $post->addPost($title, $full_text,$url, $is_active, $category, $auth->getIdentity()->id, date("y.m.d H:i:s"));  
                 $post = new Admin_Model_Tags();
                 $post->setTags($tags, $post->getAdapter()->lastInsertId('posts'));
                 $this->_helper->redirector->setGotoRoute(array('controller'=>'posts', 'action'=>'index'),'admin');;
@@ -60,7 +64,8 @@ class Admin_PostsController extends Zend_Controller_Action
             $post = new Admin_Model_Posts();
             $tagsList = new Admin_Model_Tags();
             $form->tags->setValue($tagsList->getTagsByPost($this->_getParam('id'),1));
-            $form->populate($post->getPost($id));
+            $form->submit->setLabel('Edit');
+            $form->populate($post->getPostById($id));
         }
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
@@ -70,7 +75,11 @@ class Admin_PostsController extends Zend_Controller_Action
                 $full_text = $form->getValue('full_text');
                 $tags = $form->getValue('tags');
                 $tags = explode(',', $tags);    
-                $url = $form->getValue('url');
+                if($url){ 
+                    $url = $form->getValue('url');
+                }else{
+                    $url = $this->_helper->UrlConverter($form->getValue('title'));
+                }
                 $is_active = $form->getValue('is_active');
                 $category = $form->getValue('parent_id');
                 $post = new Admin_Model_Posts();

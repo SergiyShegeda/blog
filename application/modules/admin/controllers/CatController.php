@@ -40,7 +40,11 @@ class Admin_CatController extends Zend_Controller_Action
             $formData = $this->getRequest()->getPost();
             if ($form->isValid($formData)) {
                 $id = (int)$form->getValue('id');
-                $url = $form->getValue('cat_url');
+                if($url){
+                    $url = $form->getValue('cat_url');
+                }else{
+                    $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
+                }
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');         
                 $cat = new Admin_Model_Cats();
@@ -73,7 +77,11 @@ class Admin_CatController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if ($form->isValid($formData)) {
-                $url = $form->getValue('cat_url');
+                 if($url){
+                    $url = $form->getValue('cat_url');
+                }else{
+                    $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
+                }
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');            
                 $cat = new Admin_Model_Cats();

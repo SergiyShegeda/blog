@@ -1,63 +1,17 @@
 <?php 
 echo $this->doctype() ?>
-<html xmlns="http://www.w3.org/1999/xhtml"> 
 <head>  
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-  <title>Bloggers</title>
+  <?php echo $this->headTitle(); ?>
+  <?php echo $this->headMeta(); ?>
   <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?>
 </head> 
 <body id="www-url-cz">
 <!-- Main -->
 <div id="main" class="box">
-  <!-- Header -->
-  <div id="header">
-    <!-- Logotyp -->
-    <h1 id="logo"><a href="/">Sergik<strong>-Blog</strong><span></span></a></h1>
-    <hr class="noscreen" />
-    <!-- Quick links -->
-    <div class="noscreen noprint">
-      <p><em>Quick links: <a href="#content">content</a>, <a href="#tabs">navigation</a>, <a href="#search">search</a>.</em></p>
-      <hr />
-    </div>
-    <!-- Search -->
-    <!--<div id="search" class="noprint">
-      <form action="#" method="get">
-        <fieldset>
-        <legend>Search</legend>
-        <label><span class="noscreen">Find:</span> <span id="search-input-out">
-        <input type="text" name="" id="search-input" size="30" />
-        </span></label>
-        <input type="image" src="design/search_submit.gif" id="search-submit" value="OK" />
-        </fieldset>
-      </form>
-    </div> -->
-    <!-- /search -->
-  </div>
-  <!-- /header -->
-  <!-- Main menu (tabs) -->
-  <div id="tabs" class="noprint">
-    <h3 class="noscreen">Navigation</h3>
-    <ul class="box">
-      <li id="active"><a href="/">Weblog<span class="tab-l"></span><span class="tab-r"></span></a></li>
-      <!-- Active -->
-      
-    </ul>
-    <hr class="noscreen" />
-  </div>
-  <!-- /tabs -->
-  <!-- Page (2 columns) -->
-  <div id="page" class="box">
-    <div id="page-in" class="box">
-     <!-- <div id="strip" class="box noprint">
-        <!-- RSS feeds -->
-     <!--   <p id="rss"><strong>RSS:</strong> <a href="#">articles</a> / <a href="#">comments</a></p>
-        <hr class="noscreen" />
-        <!-- Breadcrumbs -->
-    
-    <!--    <hr class="noscreen" />
-      </div>
-      <!-- /strip -->
-      <!-- Content -->
+    <?php echo $this->partial('header.phtml','front', array(
+    'title'=>$this->title,
+     )); ?>
+
       <div id="content"><?php echo $this->layout()->content ?></div>
       <!-- /content -->
       <!-- Right column -->
@@ -77,9 +31,7 @@ echo $this->doctype() ?>
             <? }?>
               
           </div>
-          <!-- /Login Form -->
           <hr class="noscreen" />
-          <!-- Category -->
           <h3 ><span>Category</span></h3>
           <ul id="category">
             <?php  $cat = new Admin_Model_Cats();
@@ -88,56 +40,13 @@ echo $this->doctype() ?>
           <li><a href="<?php  echo $this->url(array('catUrl' => $category->cat_url), 'catView') ?>"><?php echo $category->cat_title ?></a></li>
         <?php endforeach ?>
           </ul>
-          <hr class="noscreen" />
-          <!-- Archive -->
-          <h3><span>Archive</span></h3>
-          <ul id="archive">
-           <!-- <li><a href="#">January 2007</a></li>
-            <li><a href="#">December 2006</a></li>
-            <li><a href="#">November 2006</a></li>
-            <li><a href="#">October 2006</a></li>
-            <li><a href="#">September 2006</a></li>
-            <li id="archive-active"><a href="#">August 2006</a></li>
-            <!-- Active -->
-            <!--<li><a href="#">July 2006</a></li>
-            <li><a href="#">June 2006</a></li>
-            <li><a href="#">May 2006</a></li>
-            <li><a href="#">April 2006</a></li>
-            <li><a href="#">March 2006</a></li>
-            <li><a href="#">February 2006</a></li>
-            <li><a href="#">January 2006</a></li>
-          </ul>
-          <hr class="noscreen" />
-          <!-- Links -->
-          <h3><span>Links</span></h3>
-          <ul id="links">
-            <li><a href="#">Something</a></li>
-            <li><a href="#">Something</a></li>
-            <li><a href="#">Something</a></li>
-            <li><a href="#">Something</a></li>
-            <li><a href="#">Something</a></li>
-          </ul>
-          <hr class="noscreen" />
+         
         </div>
-        <!-- /col-in -->
       </div>
-      <!-- /col -->
     </div>
-    <!-- /page-in -->
   </div>
-  <!-- /page -->
-  <!-- Footer -->
-  <div id="footer">
-    <div id="top" class="noprint">
-      <p><span class="noscreen">Back on top</span> <a href="#header" title="Back on top ^">^<span></span></a></p>
-    </div>
-      <hr class="noscreen" />
-      
-    <p id="copyright">&copy; 2011 <a href="#">Hello</a></p>
-  </div>
-  <!-- /footer -->
+  <?php echo $this->render('footer.phtml','front'); ?>
 </div>
-<!-- /main -->
 </body>
    
 </html>

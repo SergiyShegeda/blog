@@ -9,7 +9,7 @@ class Admin_CommentsController extends Zend_Controller_Action
     { 
         $auth = Zend_Auth::getInstance();
         if (!$auth->hasIdentity()) {
-           $this->_helper->redirector('index','auth','admin');
+           $this->_helper->redirector->setGotoRoute(array('controller'=>'auth', 'action'=>'index'),'admin');
         }
     }
 

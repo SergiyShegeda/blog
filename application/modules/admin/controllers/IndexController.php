@@ -8,7 +8,7 @@ class Admin_IndexController extends Zend_Controller_Action
     { 
         $auth = Zend_Auth::getInstance();
         if (!$auth->hasIdentity()) {
-            $this->_helper->redirector('index','auth','aria77');
+            $this->_helper->redirector->setGotoRoute(array('controller'=>'auth', 'action'=>'index'),'admin');
         }
     }
     
