@@ -1,16 +1,16 @@
 <?php
+
 class Admin_CatController extends Zend_Controller_Action
 {
     /**
-     *Check for user logged on 
+     * Check for user logged on 
      */
     public function init()
     {
-        
         $auth = Zend_Auth::getInstance();
         if (!$auth->hasIdentity()) {
             //redirect to login page
-            $this->_helper->redirector('index','auth','admin');
+            $this->_helper->redirector('index', 'auth', 'admin');
         }
     }
     
@@ -32,24 +32,32 @@ class Admin_CatController extends Zend_Controller_Action
         $form->submit->setLabel('Save');
         $this->view->form = $form;       
         $id = $this->_getParam('id', 0);
-        if ($id > 0) {
-            $news = new Admin_Model_Cats();
-            $form->populate($news->getCat($id));
+        
+        if (!$id) {
+            // redirect to 404 page
         }
+        
+        $news = new Admin_Model_Cats();
+        $form->populate($news->getCat($id));
+        
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
+            
             if ($form->isValid($formData)) {
-                $id = (int)$form->getValue('id');
-                if($url){
+                $id = (int) $form->getValue('id');
+                
+                if ($url) {
                     $url = $form->getValue('cat_url');
-                }else{
+                } else {
                     $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
                 }
+                
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');         
                 $cat = new Admin_Model_Cats();
                 $cat->updateCat($id, $url, $title, $parent);                
-                $this->_helper->redirector->setGotoRoute(array('controller'=>'cat', 'action'=>'index'),'admin');
+                
+                $this->_helper->redirector->setGotoRoute(array('controller'=>'cat', 'action'=>'index'), 'admin');
             } else {
                 $form->populate($formData);
             }
@@ -64,8 +72,10 @@ class Admin_CatController extends Zend_Controller_Action
         $id = $this->_getParam('id');
         $cat = new Admin_Model_Cats();
         $cat->deleteCat($id);
-        $this->_helper->redirector('index','cat');
+        
+        $this->_helper->redirector('index', 'cat');
     }
+    
     /**
      * Add Categorie 
      */
@@ -73,20 +83,24 @@ class Admin_CatController extends Zend_Controller_Action
     {  
         $form = new Admin_Form_Cat();
         $form->submit->setLabel('Add');
-        $this->view->form = $form;       
+        $this->view->form = $form;   
+        
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
+            
             if ($form->isValid($formData)) {
-                 if($url){
+                
+                if ($url) {
                     $url = $form->getValue('cat_url');
-                }else{
+                } else {
                     $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
                 }
+                
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');            
                 $cat = new Admin_Model_Cats();
                 $cat->addCat($url, $title, $parent);
-                $this->_helper->redirector->setGotoRoute(array('controller'=>'cat', 'action'=>'index'),'admin');
+                $this->_helper->redirector->setGotoRoute(array('controller'=>'cat', 'action'=>'index'), 'admin');
             } 
         }
     }
