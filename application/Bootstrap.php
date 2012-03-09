@@ -1,19 +1,26 @@
 <?php
+
+/**
+ * This file looks like just a FUCKED!!!! WTF! CLEAN IT PLEASE!
+ */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {   
     protected function _initActionHelper()
     {
         Zend_Controller_Action_HelperBroker::addHelper(new Blog_Action_Helper_UrlConverter());
     }
-   /**
-    * Init Layout helper  
-    */
+    
+    /**
+     * Init Layout helper  
+     */
     protected function _initLayoutHelper()
     {
-    $this->bootstrap('frontController');
-    Zend_Controller_Action_HelperBroker::addHelper(new Blog_Action_Helper_LayoutLoader());
+        $this->bootstrap('frontController');
+        Zend_Controller_Action_HelperBroker::addHelper(new Blog_Action_Helper_LayoutLoader());
     }
+    
     /**
+     * Description? 
      *
      * @return type 
      */
@@ -23,12 +30,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
         
         $router-> addRoute('postView',new Zend_Controller_Router_Route(
-                ':catUrl/:postUrl/*', array(
-                                     'controller' => 'post',
-                                     'action'     => 'view'
-                                      )
-            )    
-        );
+            ':catUrl/:postUrl/*', array(
+                'controller' => 'post',
+                'action'     => 'view'
+            )
+        ));
+        
+        // Do the same for other lines in this files
+        // Do the same for other lines in this files
+        // Do the same for other lines in this files
+        // Do the same for other lines in this files
+        // Do the same for other lines in this files
+        
         $router-> addRoute('catView',new Zend_Controller_Router_Route(
                 ':catUrl', array(
                            'controller' => 'post',
