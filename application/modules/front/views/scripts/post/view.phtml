@@ -2,9 +2,8 @@
   <h2><span><?php echo $this->escape($this->post['title']); ?></a></span></h2>
   <p class="info noprint"> <span class="date"><?echo $this->post['date'];?></span>
       <span class="noscreen">,</span> <span class="cat"><a href="#"><? echo $this->post['cat_title']?></a></span>
-      <span class="noscreen">,</span> <span class="user"><a href="#"><? echo $this->post['username'];?></a></span>
+      <span class="noscreen">,</span> <span class="user"><? echo $this->post['username'];?></span>
   <p><?php echo( $this->post['full_text']); ?></p>
- <!-- <p class="btn-more box noprint"><strong><a href="#">Continue</a></strong></p>-->
   <br>
 </div>
 <div slass="comments">

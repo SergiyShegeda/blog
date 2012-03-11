@@ -5,7 +5,7 @@
         <h2><span><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"><?php echo $this->escape($post['title']); ?></a></span></h2>
         <p class="info noprint"> <span class="date"><?echo $post['date'];?></span>
             <span class="noscreen">,</span> <span class="cat"><a href="<?php  echo $this->url(array('catUrl' => $post['cat_url']), 'catView') ?>"><? echo $post['cat_title']?></a></span>
-            <span class="noscreen">,</span> <span class="user"><a href="#"><? echo $post['username'];?></a></span>
+            <span class="noscreen">,</span> <span class="user"><? echo $post['username'];?></span>
             <span class="noscreen">,</span> <span class="comments"><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"> Comments(<?php echo $this->CommentsCount($post['id']); ?>)</a></span> </p>
         <p><?php echo( $post['full_text']); ?></p>
         <p class="btn-more box noprint"><strong><a href="<?php echo $this->url(array('catUrl'=>$post['cat_url'],'postUrl' => $post['url']), 'postView') ?>"">Continue</a></strong></p>
