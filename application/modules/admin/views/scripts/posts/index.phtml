@@ -11,19 +11,17 @@
     <td><b>Tags</b></td>
     <td><b>Action</b></td>
 </tr>
-<?php foreach ($this->posts as $key=>$val): //Zend_Debug::dump($val);die; ?>
+<?php foreach ($this->posts as $key=>$val): ?>
     <tr style="border:1px solid #333333" mce_style="border:1px solid #333333">
-        <td><b><?=$val['id']?></b></td>
-        <td><b><?=$val['title']?></b></td>   
-        <td><b><?=$val['full_text']?></b></td>
-        <td><b><?=$val['url']?></b></td>
-        <td><b><input type="radio"<?if ($val['is_active'] == 1) {?> checked="checked"<?}?> disabled="true"> </b></td>
-        <td><b><?=$val['cat_title']?></b></td>
-        <td><b><? foreach ($this->tags as $val1): ?>
-            <?if ($val['id'] == $val1['id']) {?>
-                <?=$val1['name']?>
-            <?}?>
-            <?endforeach;?>
+        <td><?=$val['id']?></td>
+        <td><?=$val['title']?></td>   
+        <td><?=$val['full_text']?></td>
+        <td><?=$val['url']?></td>
+        <td><input type="radio"<?if ($val['is_active'] == 1) {?> checked="checked"<?}?> disabled="true"></td>
+        <td><?=$val['cat_title']?></td>
+        <td><?php foreach ($val->getTags() as $tag ):?>
+        <?php echo $tag['name']?>&nbsp;
+         <?php endforeach;?>
             </b></td>  
         <td><b><a href="<?php echo $this->url(array('module'=>'admin','controller'=>'posts','action'=>'edit', 'id'=>$val['id']),'admin');?>"><div id="edit">Edit</div></a>
                 <a href="<?php echo $this->url(array('module'=>'admin','controller'=>'posts','action'=>'delete', 'id'=>$val['id']),'admin');?>" onclick="return confirm('Are you sure you want to delete?')"><div id="delete">Delete</div></a> </b></td>    

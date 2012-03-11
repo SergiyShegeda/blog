@@ -12,13 +12,19 @@ class Admin_CommentsController extends Zend_Controller_Action
            $this->_helper->redirector->setGotoRoute(array('controller'=>'auth', 'action'=>'index'),'admin');
         }
     }
-
+    
+    /**
+     * Index Action 
+     */
     public function indexAction()
     {
         $comments = new Admin_Model_Comments();
         $this->view->comments = $comments->getComments();
     }
    
+    /**
+     * Add Comment
+     */
     public function addAction()
     {  
         $form = new Application_Form_Comments();  

@@ -2,22 +2,13 @@
 class Admin_Model_Posts extends Zend_Db_Table
 {
     protected $_name = "posts";
-
-//    public function getUrl($url)
-//    {
-//        $transform = array("ä" => "ae", "Ä" => "AE", "ü" => "ue", "Ü" => "UE", "ö" => "oe", "Ö" => "OE", "ø" => "oe", "ß" => "ss", " " => "-", "." => "", "/" => "-", "---" => "-", "--" => "-", "é" => "e", "É" => "E", "&nbsp;" => "-", "&" => "und", "(" => "", ")" => "", "\'" => "", ":" => "",
-//        "а"=>"a","б"=>"b","в"=>"v","г"=>"g","д"=>"d","е"=>"e", "ё"=>"yo","ж"=>"j","з"=>"z","и"=>"i","й"=>"i","к"=>"k","л"=>"l", "м"=>"m","н"=>"n","о"=>"o","п"=>"p","р"=>"r","с"=>"s","т"=>"t", "у"=>"y","ф"=>"f","х"=>"h","ц"=>"c","ч"=>"ch", "ш"=>"sh","щ"=>"sh","ы"=>"i","э"=>"e","ю"=>"u","я"=>"ya",
-//        "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D","Е"=>"E", "Ё"=>"Yo","Ж"=>"J","З"=>"Z","И"=>"I","Й"=>"I","К"=>"K", "Л"=>"L","М"=>"M","Н"=>"N","О"=>"O","П"=>"P", "Р"=>"R","С"=>"S","Т"=>"T","У"=>"Y","Ф"=>"F", "Х"=>"H","Ц"=>"C","Ч"=>"Ch","Ш"=>"Sh","Щ"=>"Sh", "Ы"=>"I","Э"=>"E","Ю"=>"U","Я"=>"Ya",
-//        "ь"=>"","Ь"=>"","ъ"=>"","Ъ"=>"","®"=>"","©"=>"","™"=>"", "–"=>"-"
-//
-//        );
-//        $transform2 = array("---" => "-", "--" => "-");
-//        $url_temp = strtr(trim($url), $transform);
-//        $url_complite = strtr($url_temp, $transform2);
-//        
-//        return strtolower($url_complite);
-//    }
+    protected $_rowClass = 'Admin_Model_Row_Tag';
     
+    /**
+     * Find all Posts 
+     * 
+     * @return array
+     */
     public function findAll()
     {       
         $select = $this->select()
@@ -30,6 +21,12 @@ class Admin_Model_Posts extends Zend_Db_Table
         return $this->fetchAll($select);   
     }
     
+    /**
+     * Get post by id 
+     * 
+     * @param integer $id
+     * @return array
+     */
     public function getPostsById($id) 
     { 
         $select = $this->select()
@@ -42,58 +39,109 @@ class Admin_Model_Posts extends Zend_Db_Table
        return $this->fetchAll($select);
     }
     
+    /**
+     * Get posts by tag id
+     * 
+     * @param integer $tagId
+     * @return array 
+     */
+    public function getPostsByTagId($tagId) 
+    { 
+      $select = $this->select()
+                       ->setIntegrityCheck(false)
+                       ->from(array('tag_post'), array('*'))
+                       ->join('posts', 'tag_post.post_id = posts.id')
+                       ->join('categories', 'posts.category = categories.id',array('cat_url','cat_title'))
+                       ->join('users', 'posts.user = users.id','username')    
+                       ->where('tag_post.tag_id = '.$tagId);
+      
+       return $this->fetchAll($select);
+    }
+    
+    /**
+     *
+     * @param integer $id
+     * @return array
+     * @throws Exception $id
+     */
     public function getPostById($id) 
     { 
         $row = $this->fetchRow('id = '.$id);
         if (!$row) {
-            throw new Exception("Could not find row $id");
+            throw new Zend_Controller_Action_Exception("Required param missed", 404);
         }
         
         return $row->toArray();     
     }
-
+    
+    /**
+     *
+     * @param string $url
+     * @return array
+     * @throws Exception $url
+     */
     public function getPostByUrl($url) 
     { 
-    $select = $this->select()
-                    ->setIntegrityCheck(false)
-                    ->from(array('posts'), array('*'))
-                    ->join('categories', 'posts.category = categories.id','cat_title')
-                    ->join('users', 'posts.user = users.id','username')    
-                    ->where('url = "' . $url . '"');
-    if (!$select) {
-        throw new Exception('Could not find row with url ' . $url);
+        $select = $this->select()
+                        ->setIntegrityCheck(false)
+                        ->from(array('posts'), array('*'))
+                        ->join('categories', 'posts.category = categories.id','cat_title')
+                        ->join('users', 'posts.user = users.id','username')    
+                        ->where('url = "' . $url . '"');
+        if (!$select) {
+             throw new Zend_Controller_Action_Exception("Required param missed", 404);
+        }
+
+        return $this->fetchRow($select);
     }
     
-    return $this->fetchRow($select);
-    }
-    
+    /**
+     *Add post
+     * 
+     * @param string $title
+     * @param string $full_text
+     * @param string $url
+     * @param bool $is_active
+     * @param integer $category
+     * @param integer $user
+     * @param date $date 
+     */
     public function addPost($title, $full_text, $url, $is_active, $category, $user, $date)
     {
-    if (!$url) {
-        $url = $title;
+        $data = array('title'=> $title,
+                'full_text' => $full_text,
+                'url' => $url,
+                'is_active' => (bool)$is_active,
+                'category' => $category,
+                'user' => (int)$user,
+                'date' => $date,); 
+        $this->insert($data);
     }
-    $data = array('title'=> $title,
-            'full_text' => $full_text,
-            'url' => $url,
-            'is_active' => (bool)$is_active,
-            'category' => $category,
-            'user' => (int)$user,
-            'date' => $date,
-            ); 
-    $this->insert($data);
-    }
-
+    
+    /**
+     *Delete post
+     * 
+     * @param integer $id 
+     */
     public function deletePost($id)
     {
         $this->delete('id =' . (int)$id);
     }
-
+    
+    /**
+     * Update post
+     * 
+     * @param integer $id
+     * @param string $title
+     * @param string $full_text
+     * @param string $url
+     * @param bool $is_active
+     * @param integer $category
+     * @param date $date 
+     */
     public function updatePost($id, $title, $full_text, $url, $is_active, $category, $date)
     {
-        if (!$url) {
-            $url = $title;
-        }
-        $data = array('id' => $id,
+       $data = array('id' => $id,
                 'title'=> $title,
                 'full_text' => $full_text,
                 'url' => $url,

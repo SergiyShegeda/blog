@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Login Form
+ */
 class Application_Form_Login extends Zend_Form
 {
     public function init()
     {
         $this->setName("login");
         $this->setMethod('post');
-        
-        // Where is route? Do not hard code path!
-        $this->setAction('/aria77/auth');
+        $this->setAction($this->getView()->url(array('controller'=>'auth'), 'admin')); 
         
         $this->addElement('text', 'username', array(
             'filters'    => array('StringTrim', 'StringToLower'),

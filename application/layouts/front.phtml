@@ -19,10 +19,10 @@ echo $this->doctype() ?>
           <? $auth = Zend_Auth::getInstance();
              if (!$auth->hasIdentity()) {
                   echo $this->SetupLoginForm();
-                  echo '<p><a href="'.$this->url(array('registration' => 'registration'), 'reg').'">Registration</a></p>'; 
+                  echo '<p><a href="'.$this->url(array('registration' => 'registration'), 'registration').'">Registration</a></p>'; 
             }else{
                 echo 'You loged in as <b>' . $auth->getIdentity()->username .'</b>';
-                echo '<p><a href="'.$this->url(array('logOut' => ''), 'logout').'">Logout</a></p>'; ?>
+                echo '<p><a href="' . $this->url(array(), 'logout') . '">Logout</a></p>'; ?>
         <? }?>           
           </div>
           <hr class="noscreen" />
@@ -33,6 +33,10 @@ echo $this->doctype() ?>
         <?php foreach ($categories as $category) : ?>
           <li><a href="<?php  echo $this->url(array('catUrl' => $category->cat_url), 'catView') ?>"><?php echo $category->cat_title ?></a></li>
         <?php endforeach ?>
+          </ul>
+          <h3 ><span>Tags</span></h3>
+          <ul id="tags">
+            <?php echo $this->TagCloud();?>
           </ul>
          
         </div>

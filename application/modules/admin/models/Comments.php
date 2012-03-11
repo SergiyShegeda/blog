@@ -2,7 +2,12 @@
 class Admin_Model_Comments extends Zend_Db_Table
 {
     protected $_name = 'comments';
-
+    
+    /**
+     *Get all comments
+     * 
+     * @return array 
+     */
     public function getComments() 
     {
         $result = $this->fetchAll();
@@ -10,6 +15,12 @@ class Admin_Model_Comments extends Zend_Db_Table
         return $result->toArray();
     }
     
+    /**
+     *Get comments by id
+     * 
+     * @param integer $id
+     * @return array 
+     */
     public function getCommentsById($id) 
     {     
         $select = $this->select()
@@ -21,7 +32,15 @@ class Admin_Model_Comments extends Zend_Db_Table
         
         return $this->fetchAll($select);
     }
-
+    
+    /**
+     * Save comment
+     * 
+     * @param integer $postId
+     * @param string $description
+     * @param string $name
+     * @param date $postedOn 
+     */
     public function saveComment($postId, $description, $name, $postedOn)
     {
         $data = array('post_id' => $postId,

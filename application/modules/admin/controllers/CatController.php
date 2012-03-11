@@ -1,5 +1,4 @@
 <?php
-
 class Admin_CatController extends Zend_Controller_Action
 {
     /**
@@ -34,7 +33,7 @@ class Admin_CatController extends Zend_Controller_Action
         $id = $this->_getParam('id', 0);
         
         if (!$id) {
-            // redirect to 404 page
+              throw new Zend_Controller_Action_Exception("Required param missed", 404);
         }
         
         $news = new Admin_Model_Cats();
@@ -45,13 +44,10 @@ class Admin_CatController extends Zend_Controller_Action
             
             if ($form->isValid($formData)) {
                 $id = (int) $form->getValue('id');
-                
-                if ($url) {
-                    $url = $form->getValue('cat_url');
-                } else {
+                $url = $form->getValue('cat_url');
+                if (!$url) {
                     $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
                 }
-                
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');         
                 $cat = new Admin_Model_Cats();
@@ -71,9 +67,8 @@ class Admin_CatController extends Zend_Controller_Action
     {  
         $id = $this->_getParam('id');
         $cat = new Admin_Model_Cats();
-        $cat->deleteCat($id);
-        
-        $this->_helper->redirector('index', 'cat');
+        $cat->deleteCat($id);  
+        $this->_helper->redirector->setGoToRoute(array('action'=>'cat'),'admin');
     }
     
     /**
@@ -89,13 +84,10 @@ class Admin_CatController extends Zend_Controller_Action
             $formData = $this->getRequest()->getPost();
             
             if ($form->isValid($formData)) {
-                
-                if ($url) {
-                    $url = $form->getValue('cat_url');
-                } else {
+                 $url = $form->getValue('cat_url');
+                if (!$url) {
                     $url = $this->_helper->UrlConverter($form->getValue('cat_title'));
                 }
-                
                 $title = $form->getValue('cat_title');
                 $parent = $form->getValue('parent_id');            
                 $cat = new Admin_Model_Cats();

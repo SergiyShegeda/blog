@@ -11,11 +11,12 @@ class Admin_PostsController extends Zend_Controller_Action
             $this->_helper->redirector->setGotoRoute(array('controller'=>'auth', 'action'=>'index'),'admin');
         }
     }
-
+    
+    /**
+     * Index Action 
+     */
     public function indexAction()
     {   
-       // $converter = new Admin_Controller_Helpers_UrlConverter();
-        //Zend_Debug::dump( $converter);die;
         $posts = new Admin_Model_Posts();
         $this->view->posts = $posts->findAll(); 
         $this->view->title = _("Posts");
@@ -23,6 +24,10 @@ class Admin_PostsController extends Zend_Controller_Action
         $this->view->tags = $tagsList->findTags();
   
     }
+    
+    /**
+     * Add post 
+     */
     public function addAction()
     {
         $form = new Admin_Form_Posts(); 
@@ -33,9 +38,7 @@ class Admin_PostsController extends Zend_Controller_Action
             if ($form->isValid($formData)) {
                 $title = $form->getValue('title'); 
                 $full_text = $form->getValue('full_text');
-                if($url){
-                    $url = $form->getValue('url');
-                }else{
+                if(!$form->getValue('url')){
                     $url = $this->_helper->UrlConverter($form->getValue('title'));
                 }
                 $is_active = $form->getValue('is_active');
@@ -53,7 +56,9 @@ class Admin_PostsController extends Zend_Controller_Action
             }
         }
     }   
-
+    /**
+     * Edit Post 
+     */
     public function editAction()
     {
         $form = new Admin_Form_Posts(); 
@@ -75,9 +80,7 @@ class Admin_PostsController extends Zend_Controller_Action
                 $full_text = $form->getValue('full_text');
                 $tags = $form->getValue('tags');
                 $tags = explode(',', $tags);    
-                if($url){ 
-                    $url = $form->getValue('url');
-                }else{
+                if(!$form->getValue('url')){
                     $url = $this->_helper->UrlConverter($form->getValue('title'));
                 }
                 $is_active = $form->getValue('is_active');

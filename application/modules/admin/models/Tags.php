@@ -3,6 +3,11 @@ class Admin_Model_Tags extends Zend_Db_Table
 {
     protected $_name = 'tags';
 
+    /**
+     *Find all tags
+     * 
+     * @return array 
+     */
     public function findTags()
     {        
         $select = $this->select()
@@ -14,27 +19,45 @@ class Admin_Model_Tags extends Zend_Db_Table
         return $this->fetchAll($select);
     }
     
-    public function getTagsByPost($id, $param)
-    {        
+    /**
+     * Get tags for tag cloud 
+     * 
+     * @return array 
+     */
+    public function getTagCloud()         
+    {
         $select = $this->select()
                         ->setIntegrityCheck(false)
-                        ->from(array('tag_post'), array('*'))
-                        ->join('tags','tag_post.tag_id = tags.tag_id')
-                        ->where('tag_post.post_id = ?', $id); 
-
-        if(!$param) { 
-            
-            return $this->fetchAll($select); 
-        } else {   
-            foreach ($this->fetchAll($select) as $c){
-                $tags .= $c->name.',';
-                
-            }
-                
-            return $tags; 
-        }
+                        ->from(array('tag_post'), array('COUNT(tag_post.tag_id) AS weight',))
+                        ->join('tags','tag_post.tag_id = tags.tag_id','name AS title')
+                        ->group('tags.tag_id');
+                        
+        return $this->fetchAll($select)->toArray(); 
     }
-
+    
+    /**
+     *
+     * @param string $tagTitle
+     * @return intger
+     * @throws Exception $tagTitle
+     */
+    public function getTagById($tagTitle)
+    {
+       $row = $this->fetchRow('name = "' . $tagTitle . '"');
+       if (!$row) 
+       {
+            throw new Zend_Controller_Action_Exception("Required param missed", 404);
+       }
+      
+        return (int)$row->tag_id;
+    }
+    
+    /**
+     * Set tags for current post 
+     * 
+     * @param array $array
+     * @param integer $postId     
+     */
     public function setTags($array, $postId)           
     {
         $dbTags = $this->fetchAll()->toArray();    
@@ -58,6 +81,11 @@ class Admin_Model_Tags extends Zend_Db_Table
         }
     }
     
+    /**
+     *Delete tags
+     * 
+     * @param integer $postId 
+     */
     public function delTags($postId)
     {
         $this->getAdapter()->delete('tag_post', 'post_id =' . (int)$postId);

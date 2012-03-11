@@ -10,8 +10,8 @@ class Blog_Action_Helper_LayoutLoader extends Zend_Controller_Action_Helper_Abst
         if (isset($config[$module]['resources']['layout']['layout'])) {
             $layoutScript = $config[$module]['resources']['layout']['layout'];
             $this->getActionController()
-                ->getHelper('layout')
-                ->setLayout($layoutScript);
+                 ->getHelper('layout')
+                 ->setLayout($layoutScript);
         }
     }
 }

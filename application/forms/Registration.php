@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Registration Form 
+ */
 class Application_Form_Registration extends Zend_Form
 {
     public function __construct()
@@ -45,11 +48,13 @@ class Application_Form_Registration extends Zend_Form
                       ->addErrorMessage('Password do not Match');
         
         $capcha = new Zend_Form_Element_Captcha('foo', array(
-                                                'label' => "Please verify you're a human",
-                                                'captcha' => array(
-                                                'captcha' => 'Figlet',
-                                                'wordLen' => 6,
-                                                'timeout' => 300,),));
+            'label' => "Please verify you're a human",
+            'captcha' => array(
+                'captcha' => 'Figlet',
+                'wordLen' => 6,
+                'timeout' => 300,
+             ),
+        ));
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setAttrib('id', 'submitbutton');

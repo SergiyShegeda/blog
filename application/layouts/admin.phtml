@@ -1,10 +1,8 @@
 <?php echo $this->doctype() ?>
 <html>
 <head>
-    <?php echo $this->headStyle() ?>
-    <?php echo $this->headScript() ?> 
-    <?php echo $this->headMeta(); ?>
     <?php echo $this->headTitle(); ?>
+    <?php echo $this->headMeta(); ?>
     <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/admin.css'); ?>
     <?php
     if ( $this->ckeditor ) {

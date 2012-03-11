@@ -1,15 +1,11 @@
 <?php
 class Front_PostController extends Zend_Controller_Action
 {
-    public function init()
-    {
-   
-    }
-
     public function indexAction()
     {
 
     }
+    
     /**
      * View a selected Post 
      */
@@ -48,11 +44,13 @@ class Front_PostController extends Zend_Controller_Action
             }        
         }
     }
-
-    public function postsbycatAction()
+    
+    /**
+     * View all post by selected categorie 
+     */
+    public function postsByCatAction()
     {
         $cat = $this->getRequest()->getParams();  
-        //Zend_Debug::dump($cat);die;
         $catId = new Admin_Model_Cats();
         $catId = $catId->getCatByUrl($cat['catUrl']);
         $posts = new Admin_Model_Posts();
@@ -66,20 +64,22 @@ class Front_PostController extends Zend_Controller_Action
         $this->view->tags = $tagsList->findTags(); 
     }
     
-    public function postsbytagAction()
+    /**
+     * View all post by selected Tag  
+     */
+    public function postsByTagAction()
     {
         $tag       = $this->getRequest()->getParams();  
-        $catId     = new Admin_Model_Cats();
-        $catId     = $catId->getCatByUrl($cat['catUrl']);
+        $tags  = new Admin_Model_Tags();
+        $tagId = $tags->getTagById($tag['tag']);    
         $posts     = new Admin_Model_Posts();
-        $tagsList  = new Admin_Model_Tags();
-        $result    = $posts->getPosts($catId);  
+        $result    = $posts->getPostsByTagId($tagId); 
         $page      = $this->_getParam('page',1);
         $paginator = Zend_Paginator::factory($result);
         $paginator->setItemCountPerPage(5);
         $paginator->setCurrentPageNumber($page);
         $this->view->paginator = $paginator;
-        $this->view->tags = $tagsList->findTags(); 
+        $this->view->tags = $tags->findTags(); 
     }
 }
 

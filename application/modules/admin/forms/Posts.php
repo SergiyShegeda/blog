@@ -16,9 +16,7 @@ class Admin_Form_Posts extends Zend_Form
 
         $full_text = new Zend_Form_Element_Textarea('full_text');
         $full_text->setLabel('Text')
-                   ->setRequired(false)
-                   ->addFilter('StripTags')
-                   ->addFilter('StringTrim');
+                   ->setRequired(false);
 
         $url = new Zend_Form_Element_Text('url');
         $url->setLabel('url') 

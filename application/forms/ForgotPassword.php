@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *Forget Password Form 
+ */
 class Application_Form_ForgotPassword extends Zend_Form
 {
     public function __construct()

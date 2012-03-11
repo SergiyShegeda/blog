@@ -6,6 +6,11 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         Zend_Controller_Action_HelperBroker::addPath(
         APPLICATION_PATH .'/modules/admin/controllers/helpers');
     }
+    
+    /**
+     *
+     * @return \Zend_Application_Module_Autoloader 
+     */
     protected function _initAutoload()
     {
         $autoloader = new Zend_Application_Module_Autoloader(array(
@@ -15,7 +20,10 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         
         return $autoloader;
     }
-
+    
+    /**
+     * Init view hekpers
+     */
     protected function _initViewHelpers()
     {
         $this->bootstrap('layout');
@@ -24,7 +32,10 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $view->doctype('XHTML1_STRICT');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
     }	
-	
+    
+    /**
+     * Init Navigation 
+     */
     protected function _initNavigation()
     {
         $this->bootstrap('layout');
